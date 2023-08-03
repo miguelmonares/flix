@@ -1,25 +1,17 @@
 import React from "react";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "../HomePage/HomePage";
+import Instructions from "../Instructions/Instructions";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Welcome to Flix</h1>
-          <p>
-            Experience a rollercoaster of emotions and capture your reactions in
-            real-time!
-          </p>
-          <button onClick={this.startExperience}>Start the Experience</button>
-        </header>
-      </div>
-    );
-  }
-
-  startExperience() {
-    console.log("Starting the emotional journey");
-  }
-}
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/instructions" element={<Instructions />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;
