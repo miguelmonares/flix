@@ -1,26 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./HomePage.css";
+import "./Stimulus.css";
 
-function HomePage() {
+function Stimulus() {
   const navigate = useNavigate();
 
   const startExperience = () => {
-    navigate("/instructions", { replace: true });
+    navigate("/results", { replace: true });
   };
 
   return (
     <div className="Home">
       <header className="Home-header">
-        <h1>Welcome to Flix</h1>
+        <h1>Stimulus</h1>
         <p>
           Experience a rollercoaster of emotions and capture your reactions in
           real-time!
         </p>
-        <button onClick={startExperience}>Start the Experience</button>
+        <button onClick={startExperience}>Results</button>
       </header>
     </div>
   );
 }
 
-export default HomePage;
+export default Stimulus;

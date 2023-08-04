@@ -1,0 +1,9 @@
+.home-top {
+  justify-content: flex-end;
+  height: 40px;
+  padding-top: 20px;
+  margin-right: 20px;
+  background-color: black;
+  text-decoration: underline;
+  display: flex;
+}
