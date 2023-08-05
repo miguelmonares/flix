@@ -24,6 +24,8 @@ function HomePage() {
           <div class="home-intro1">
             fear is not just an emotion, it&#x27;s a mechanism for survivial.
             <br />
+            <br />
+            <br />
             <br /> experience its intensity through a curated selection of short
             films and see how your reactions reflect the primate human response.
           </div>

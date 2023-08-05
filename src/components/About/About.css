@@ -7,3 +7,49 @@
   text-decoration: underline;
   display: flex;
 }
+
+.about-body {
+  height: 100vh;
+  color: #fff;
+  background-color: black;
+  font-family: Inconsolata, monospace;
+}
+
+.about-header {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+.about-top {
+  justify-content: flex-end;
+  height: 40px;
+  padding-top: 20px;
+  margin-right: 20px;
+  background-color: black;
+  text-decoration: underline;
+  display: flex;
+}
+
+.about-title {
+  width: 100%;
+  color: #fff;
+  justify-content: center;
+  margin-top: 60px;
+  font-family: Inconsolata, monospace;
+  display: flex;
+}
+
+.about-intro1 {
+  width: 475px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.about-start-button {
+  background-color: #363636;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: Inconsolata, monospace;
+  color: rgb(255, 255, 255);
+}
