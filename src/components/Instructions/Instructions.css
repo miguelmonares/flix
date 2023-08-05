@@ -6,6 +6,8 @@
 }
 
 .instructions-header {
+  margin-left: 20px;
+  margin-right: 20px;
   color: #fff;
   background-color: #000;
   flex-direction: row;
