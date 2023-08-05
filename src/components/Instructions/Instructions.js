@@ -17,6 +17,9 @@ function Instructions() {
 
   return (
     <div class="body">
+      <a href="/" class="home-button w-button">
+        home
+      </a>
       <h1 class="instructions-title">instructions</h1>
       <div class="instructions-header">
         <div class="instructions-copy">
@@ -54,7 +57,12 @@ function Instructions() {
         </div>
         <div class="instructions-camera">
           {camEnabled ? (
-            <Webcam audio={false} height="100%" width="100%" />
+            <Webcam
+              audio={false}
+              height="100%"
+              width="100%"
+              style={{ transform: "scaleX(-1)" }}
+            />
           ) : (
             <button
               className="instructions-enable-camera"
