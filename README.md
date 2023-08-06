@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# flix
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+wip.
+
+production should work with the below instructions, though media playback is not supported yet.
 
 ## Available Scripts
 
