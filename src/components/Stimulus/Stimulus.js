@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Stimulus.css";
+import Webcam from "react-webcam";
 
 function Stimulus() {
   const videoRef = useRef(null);
@@ -8,10 +9,78 @@ function Stimulus() {
   const navigate = useNavigate();
   const [videoStarted, setVideoStarted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
+  const webcamRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const [recordedChunks, setRecordedChunks] = useState([]);
+
+  // const handleDataAvailable = useCallback(
+  //   ({ data }) => {
+  //     if (data.size > 0) {
+  //       setRecordedChunks((prev) => prev.concat(data));
+  //     }
+  //   },
+  //   [setRecordedChunks]
+  // );
+
+  const handleDataAvailable = useCallback(
+    ({ data }) => {
+      console.log("Data chunk size:", data.size); // Log data size
+      if (data.size > 0) {
+        recordedChunks.push(data); // Directly push the data into the array
+        console.log("recordedChunks after push:", recordedChunks); // Log the array after pushing
+        setRecordedChunks([...recordedChunks]); // Trigger a state update with a copy of the array
+      } // manipulating variable directly, TODO: use state change vars
+    },
+    [recordedChunks, setRecordedChunks]
+  );
+
+  useEffect(() => {
+    console.log("Updated recorded chunks:", recordedChunks); // Log recorded chunks
+  }, [recordedChunks]);
+
+  const handleStopRecording = useCallback(() => {
+    mediaRecorderRef.current.stop();
+  }, []);
+
+  const handleDownload = useCallback(() => {
+    console.log("down call");
+    console.log(recordedChunks.length);
+    if (recordedChunks.length) {
+      console.log("chunks avail");
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "recorded-video.webm";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  }, [recordedChunks]);
+
+  const handleStartRecording = useCallback(() => {
+    if (webcamRef.current && webcamRef.current.stream) {
+      setRecordedChunks([]);
+      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
+        mimeType: "video/webm",
+      });
+      mediaRecorderRef.current.addEventListener(
+        "dataavailable",
+        handleDataAvailable
+      );
+      mediaRecorderRef.current.addEventListener("stop", handleDownload);
+      mediaRecorderRef.current.start();
+    } else {
+      console.error("Webcam stream is not available yet!");
+    }
+  }, [handleDownload, handleDataAvailable]);
 
   const handleStartClick = () => {
     setVideoStarted(true);
     const videoElement = videoRef.current;
+
+    handleStartRecording(); // Start the recording
 
     // Play video
     videoElement.play().catch((err) => {
@@ -29,9 +98,11 @@ function Stimulus() {
       videoElement.msRequestFullscreen();
     }
 
-    // Add event listener to set videoEnded to true when video ends
     videoElement.addEventListener("ended", () => {
       setVideoEnded(true);
+      setTimeout(() => {
+        handleStopRecording(); // Stop the recording
+      }, 5000); // delay stop recording by 5 seconds for debugging
     });
   };
 
@@ -44,6 +115,8 @@ function Stimulus() {
 
   return (
     <div className="stimulus-container">
+      <Webcam ref={webcamRef} style={{ display: "none" }} />
+
       {!videoStarted && (
         <div className="start-experience-overlay">
           <button
